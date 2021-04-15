@@ -1,0 +1,121 @@
+#include "fig.h"
+
+int creafig(figura* f, int alto, int ancho){
+  if(!(f!=NULL))
+	return ERR;
+  f->alto  = alto;
+  f->ancho = ancho;
+  return OK;
+}
+
+int figura0(char* salida, const figura* f){
+  int i,j;
+  
+  if(!(salida!=NULL && f!=NULL))
+	return ERR;
+
+  strcpy(salida,"");
+  
+  for(i=0;i<f->alto;i++){
+	for(j=0;j<f->ancho;j++)
+	  if(BORDE(i,j,f))
+		strcat(salida,"*");
+	  else
+		strcat(salida," ");
+    strcat(salida,"\n");
+  }
+  strcat(salida,"\n");
+  return OK;
+}
+
+int figura1(char* salida, const figura* f){
+  int i,j;
+  
+  if(!(salida!=NULL && f!=NULL))
+	return ERR;
+
+  strcpy(salida,"*\n");
+  
+  for(i=1;i<f->alto;i++){
+	for(j=0;j<f->ancho;j++)
+	  if(RANGO_DERECHO_DIAGONAL(i,j,f))
+		strcat(salida,"*");
+	  else
+		strcat(salida," ");
+    strcat(salida,"\n");
+  }
+  strcat(salida,"\n");
+  return OK;
+}
+
+int figura2(char* salida, const figura* f){
+  int i,j;
+  
+  /*NOTA: PARA EL CASO DE LAS REFLEXIONES EN X COMO EN EL CASO 2 Y 4, 
+  HACEMOS LO MISMO QUE 1 Y 2 PERO EMPEZANDO POR LA ULTIMA COLUMNA HACIA LA PRIMERA.*/
+  
+  if(!(salida!=NULL && f!=NULL))
+	return ERR;
+
+  strcpy(salida,"");
+  
+  for(i=f->alto-1;i>=1;i--){
+	for(j=0;j<f->ancho;j++)
+	  if(RANGO_IZQUIERDO_DIAGONAL_POSITIVA(i,j,f))
+		strcat(salida,"*");
+	  else
+		strcat(salida," ");
+    strcat(salida,"\n");
+  }
+  strcat(salida,"*\n");
+  return OK;
+}
+
+int figura3(char* salida, const figura* f){
+  int i,j;
+  
+  if(!(salida!=NULL && f!=NULL))
+	return ERR;
+  
+  strcpy(salida,"");
+  
+  for(i=0;i<f->alto-1;i++){
+	for(j=0;j<f->ancho;j++)
+	  if(RANGO_IZQUIERDO_DIAGONAL(i,j,f))
+		strcat(salida,"*");
+	  else
+		strcat(salida," ");
+    strcat(salida,"\n");
+  }
+  for(j=0;j<f->ancho-1;j++)
+	  strcat(salida," ");
+  strcat(salida,"*\n");
+  return OK;
+}
+
+int figura4(char* salida, const figura* f){
+  int i,j;
+  
+  /*NOTA: PARA EL CASO DE LAS REFLEXIONES EN X COMO EN EL CASO 2 Y 4, 
+  HACEMOS LO MISMO QUE 1 Y 2 PERO EMPEZANDO POR LA ULTIMA COLUMNA HACIA LA PRIMERA.*/
+  
+  if(!(salida!=NULL && f!=NULL))
+	return ERR;
+
+  strcpy(salida,"");
+  
+  for(j=0;j<f->ancho-1;j++)
+	  strcat(salida," ");
+  strcat(salida,"*\n");
+  
+  for(i=f->alto-2;i>=0;i--){
+	for(j=0;j<f->ancho;j++)
+	  if(RANGO_DERECHO_DIAGONAL_POSITIVA(i,j,f))
+		strcat(salida,"*");
+	  else
+		strcat(salida," ");
+    strcat(salida,"\n");
+  }
+  strcat(salida,"\n");
+  return OK;
+}
